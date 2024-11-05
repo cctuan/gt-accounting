@@ -36,7 +36,7 @@ export default function ModuleForm({ onClose, onSubmit, onDelete, editingModule 
 
   return (
     <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
-      <div className="bg-white rounded-lg p-6 max-w-md w-full">
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full text-gray-900 dark:text-gray-100">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-medium">
             {editingModule ? '編輯帳單檢查模組' : '新增帳單檢查模組'}
@@ -53,12 +53,12 @@ export default function ModuleForm({ onClose, onSubmit, onDelete, editingModule 
         
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               模組名稱
             </label>
             <input
               type="text"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               value={formData.name}
               onChange={(e) => setFormData({...formData, name: e.target.value})}
               placeholder="例：玉山信用卡帳單"
@@ -66,31 +66,31 @@ export default function ModuleForm({ onClose, onSubmit, onDelete, editingModule 
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               銀行
             </label>
             <select
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
               value={formData.bank}
               onChange={(e) => setFormData({...formData, bank: e.target.value})}
             >
-              <option value="玉山">玉山銀行</option>
-              <option value="國泰">國泰銀行</option>
-              <option value="台新">台新銀行</option>
+              <option className="text-gray-900 dark:text-white" value="玉山">玉山銀行</option>
+              <option className="text-gray-900 dark:text-white" value="國泰">國泰銀行</option>
+              <option className="text-gray-900 dark:text-white" value="台新">台新銀行</option>
             </select>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               密碼
-              <span className="text-xs text-gray-500 ml-1">
+              <span className="text-xs text-gray-500 dark:text-gray-400 ml-1">
                 (用於解密 PDF 文件)
               </span>
             </label>
             <div className="mt-1 relative rounded-md shadow-sm">
               <input
                 type={showPassword ? "text" : "password"}
-                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 pr-10"
+                className="block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                 value={formData.password}
                 onChange={(e) => setFormData({...formData, password: e.target.value})}
                 placeholder="請輸入 PDF 密碼"
@@ -107,7 +107,7 @@ export default function ModuleForm({ onClose, onSubmit, onDelete, editingModule 
                 )}
               </button>
             </div>
-            <p className="mt-1 text-xs text-gray-500">
+            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
               通常為身分證後四碼或信用卡後四碼
             </p>
           </div>
@@ -116,14 +116,14 @@ export default function ModuleForm({ onClose, onSubmit, onDelete, editingModule 
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+              className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600"
             >
               取消
             </button>
             <button
               type="button"
               onClick={handleSubmit}
-              className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700"
+              className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 dark:bg-indigo-500 border border-transparent rounded-md hover:bg-indigo-700 dark:hover:bg-indigo-600"
             >
               {editingModule ? '更新' : '新增'}
             </button>

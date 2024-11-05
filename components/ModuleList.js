@@ -68,21 +68,21 @@ export default function ModuleList({ modules, onEdit }) {
 
   return (
     <>
-      <div className="bg-white shadow overflow-hidden sm:rounded-md">
-        <ul className="divide-y divide-gray-200">
+      <div className="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-md">
+        <ul className="divide-y divide-gray-200 dark:divide-gray-700">
           {modules?.map((module) => (
-            <li key={module.id || module._id}>
+            <li key={module.id || module._id} className="text-gray-900 dark:text-gray-100">
               <div className="px-4 py-4 sm:px-6">
                 <div className="flex items-center justify-between">
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-lg font-medium text-gray-900 truncate">
+                    <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100" truncate>
                       {module.name}
                     </h3>
                     <div className="mt-2 flex items-center text-sm text-gray-500">
                       <span className="truncate">
                         {module.bank} 銀行 | 
-                        檢查頻率: {module.schedule || '每日'} | 
-                        上次檢查: {module.lastCheck || '從未檢查'}
+                        {/* 檢查頻率: {module.schedule || '每日'} | 
+                        上次檢查: {module.lastCheck || '從未檢查'} */}
                       </span>
                     </div>
                   </div>
@@ -112,7 +112,7 @@ export default function ModuleList({ modules, onEdit }) {
 
       {/* 檢查結果 Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto">
+        <div className="fixed inset-0 z-50 overflow-y-auto text-gray-900 dark:text-gray-100">
           <div className="flex min-h-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
             {/* 背景遮罩 */}
             <div 
@@ -121,16 +121,16 @@ export default function ModuleList({ modules, onEdit }) {
             />
 
             {/* Modal 內容置中 */}
-            <div className="inline-block w-full max-w-2xl transform overflow-hidden rounded-lg bg-white text-left align-bottom shadow-xl transition-all sm:my-8 sm:align-middle">
+            <div className="inline-block w-full max-w-2xl transform overflow-hidden rounded-lg bg-white dark:bg-gray-800 text-left align-bottom shadow-xl transition-all sm:my-8 sm:align-middle">
               {/* Modal 標題 */}
-              <div className="bg-white px-6 pt-5 pb-4">
+              <div className="bg-white dark:bg-gray-800 px-6 py-4 border-b border-gray-200 dark:border-gray-700">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-medium text-gray-900">
+                  <h3 className="text-lg font-medium text-gray-900 dark:text-white">
                     {currentBank} 銀行檢查結果
                   </h3>
                   <button
                     onClick={() => setIsModalOpen(false)}
-                    className="text-gray-400 hover:text-gray-500"
+                    className="text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 transition-colors duration-200"
                   >
                     <span className="sr-only">關閉</span>
                     <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -144,24 +144,30 @@ export default function ModuleList({ modules, onEdit }) {
               <div className="max-h-[calc(100vh-200px)] overflow-y-auto px-6 py-4">
                 {checkResults.emails?.length > 0 ? (
                   <>
-                    <p className="font-medium mb-2">找到的郵件：</p>
+                    <p className="font-medium mb-2 text-gray-900 dark:text-white">找到的郵件：</p>
                     <ul className="list-disc pl-5 space-y-4">
                       {checkResults.emails.map((email, index) => (
-                        <li key={index} className="text-sm">
+                        <li key={index} className="text-sm text-gray-900 dark:text-gray-100">
                           <div className="text-gray-600">{email.title}</div>
                           {email.attachments?.length > 0 && (
                             <div className="mt-2 space-y-4">
                               {email.attachments.map((att, idx) => (
-                                <div key={idx} className="bg-gray-50 p-4 rounded">
+                                <div 
+                                  key={idx} 
+                                  className="bg-gray-50 dark:bg-gray-700 p-4 rounded-md shadow-sm transition-colors duration-200"
+                                >
                                   <div className="flex items-center justify-between">
-                                    <span className="text-gray-500 text-xs">
+                                    <span className="text-gray-500 dark:text-gray-400 text-xs">
                                       附件：{att.filename}
                                     </span>
                                     {att.filename.endsWith('.pdf') && !att.content && (
                                       <button
                                         onClick={() => handlePdfPassword(att, modules.find(m => m.bank === currentBank))}
                                         disabled={processingPdf}
-                                        className="px-2 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-blue-300"
+                                        className="px-2 py-1 text-xs text-white bg-blue-600 dark:bg-blue-500 rounded-md 
+                                          hover:bg-blue-700 dark:hover:bg-blue-600 
+                                          disabled:bg-blue-300 dark:disabled:bg-blue-400 
+                                          transition-colors duration-200"
                                       >
                                         {processingPdf ? '處理中...' : '解析 PDF'}
                                       </button>
@@ -181,16 +187,21 @@ export default function ModuleList({ modules, onEdit }) {
                     </ul>
                   </>
                 ) : (
-                  <p className="text-sm text-gray-600">沒有找到相關郵件</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">沒有找到相關郵件</p>
                 )}
               </div>
 
               {/* Modal 底部按鈕 */}
-              <div className="bg-gray-50 px-6 py-4">
+              <div className="bg-gray-50 dark:bg-gray-700 px-6 py-4 border-t border-gray-200 dark:border-gray-600">
                 <div className="flex justify-end">
                   <button
                     onClick={() => setIsModalOpen(false)}
-                    className="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200"
+                    className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 
+                      bg-white dark:bg-gray-700 
+                      border border-gray-300 dark:border-gray-600 
+                      rounded-md 
+                      hover:bg-gray-50 dark:hover:bg-gray-600 
+                      transition-colors duration-200"
                   >
                     關閉
                   </button>

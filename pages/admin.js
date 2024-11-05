@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import DashboardHeader from '@/components/DashboardHeader';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { TrashIcon } from '@heroicons/react/24/outline';
@@ -101,7 +101,7 @@ export default function AdminPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
       <DashboardHeader 
         title="系統設定"
         subtitle="設定系統的基本參數和提示詞"
@@ -109,10 +109,10 @@ export default function AdminPage() {
       />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white shadow rounded-lg">
-          <div className="px-4 py-5 border-b border-gray-200 sm:px-6">
+        <div className="bg-white dark:bg-gray-800 shadow rounded-lg">
+          <div className="px-4 py-5 border-b border-gray-200 dark:border-gray-700 sm:px-6">
             <div className="flex justify-between items-center">
-              <h3 className="text-lg leading-6 font-medium text-gray-900">
+              <h3 className="text-lg font-medium text-gray-900 dark:text-white">
                 設定內容
               </h3>
               <div className="flex space-x-3">
@@ -120,13 +120,13 @@ export default function AdminPage() {
                   <>
                     <button
                       onClick={handleSave}
-                      className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700"
+                      className="bg-blue-600 dark:bg-blue-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 dark:hover:bg-blue-600"
                     >
                       儲存
                     </button>
                     <button
                       onClick={handleCancel}
-                      className="bg-gray-100 text-gray-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-200"
+                      className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-600"
                     >
                       取消
                     </button>
@@ -134,7 +134,7 @@ export default function AdminPage() {
                 ) : (
                   <button
                     onClick={handleEdit}
-                    className="bg-gray-100 text-gray-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-200"
+                    className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-600"
                   >
                     編輯
                   </button>
@@ -147,13 +147,13 @@ export default function AdminPage() {
             <div className="space-y-6">
               {/* System Prompt */}
               <div>
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                   System Prompt
                 </label>
                 <div className="mt-1">
                   <textarea
                     rows={10}
-                    className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                    className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                     value={isEditing ? tempSettings.systemPrompt : settings.systemPrompt}
                     onChange={(e) => setTempSettings({
                       ...tempSettings,
@@ -167,13 +167,13 @@ export default function AdminPage() {
               {/* Categories */}
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                     交易類別
                   </label>
                   {isEditing && (
                     <button
                       onClick={handleAddCategory}
-                      className="text-sm text-blue-600 hover:text-blue-700"
+                      className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
                     >
                       + 新增類別
                     </button>
@@ -185,7 +185,7 @@ export default function AdminPage() {
                       <input
                         type="text"
                         placeholder="類別名稱"
-                        className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-1/4 sm:text-sm border-gray-300 rounded-md"
+                        className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-1/4 sm:text-sm border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                         value={category.name}
                         onChange={(e) => handleCategoryChange(index, 'name', e.target.value)}
                         disabled={!isEditing}
@@ -193,7 +193,7 @@ export default function AdminPage() {
                       <input
                         type="text"
                         placeholder="類別描述"
-                        className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-3/4 sm:text-sm border-gray-300 rounded-md"
+                        className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-3/4 sm:text-sm border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                         value={category.description}
                         onChange={(e) => handleCategoryChange(index, 'description', e.target.value)}
                         disabled={!isEditing}
@@ -201,7 +201,7 @@ export default function AdminPage() {
                       {isEditing && (
                         <button
                           onClick={() => handleRemoveCategory(index)}
-                          className="p-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-md"
+                          className="p-2 text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md"
                           title="刪除類別"
                         >
                           <TrashIcon className="h-5 w-5" />
@@ -214,13 +214,13 @@ export default function AdminPage() {
 
               {/* Date Format */}
               <div>
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                   日期格式
                 </label>
                 <div className="mt-1">
                   <input
                     type="text"
-                    className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                    className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                     value={isEditing ? tempSettings.dateFormat : settings.dateFormat}
                     onChange={(e) => setTempSettings({
                       ...tempSettings,
