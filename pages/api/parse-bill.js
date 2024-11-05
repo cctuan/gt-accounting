@@ -1,3 +1,5 @@
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "./auth/[...nextauth]";
 import { parseImagesIntoBill } from '@/lib/imageParser';
 
 export const config = {
@@ -9,11 +11,26 @@ export const config = {
 };
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
   try {
+    // 檢查 session
+    const session = await getServerSession(req, res, authOptions);
+    
+    if (!session) {
+      console.log('No session found');
+      return res.status(401).json({ error: 'Not authenticated' });
+    }
+
+    // 確認是 Google 登入
+    if (!session.user?.email) {
+      console.log('No Google email found');
+      return res.status(403).json({ error: 'Must login with Google' });
+    }
+
+    // 原有的 parse-bill 邏輯
+    if (req.method !== 'POST') {
+      return res.status(405).json({ error: 'Method not allowed' });
+    }
+
     const { base64Images, settings } = req.body;
 
     if (!Array.isArray(base64Images) || base64Images.length === 0) {
@@ -25,9 +42,9 @@ export default async function handler(req, res) {
 
     res.status(200).json(billStatement);
   } catch (error) {
-    console.error('Error analyzing bill:', error);
-    res.status(500).json({ 
-      error: 'Failed to analyze bill',
+    console.error('Parse bill error:', error);
+    return res.status(500).json({ 
+      error: 'Internal server error',
       details: error.message 
     });
   }

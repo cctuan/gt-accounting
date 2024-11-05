@@ -4,9 +4,7 @@ import { getSession } from 'next-auth/react';
 
 export default async function handler(req, res) {
   try {
-    console.log('Checking session...');
     const session = await getSession({ req });
-    console.log('Session result:', session);
     
     if (!session) {
       console.log('No session found');
