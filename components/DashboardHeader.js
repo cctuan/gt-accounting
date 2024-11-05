@@ -35,7 +35,7 @@ export default function DashboardHeader({ title, subtitle, onDebug }) {
                 href="/dashboard"
                 className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
               >
-                首頁
+                模組設定
               </Link>
               <Link
                 href="/admin"
