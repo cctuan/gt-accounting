@@ -3,23 +3,27 @@ import { google } from 'googleapis';
 import { getSession } from 'next-auth/react';
 
 export default async function handler(req, res) {
-  const { bank } = req.query;
-  if (!bank) {
-    return res.status(400).json({ error: 'Bank parameter is required' });
-  }
-
-  const session = await getSession({ req });
-  if (!session) {
-    return res.status(401).json({ error: 'Not authenticated' });
-  }
-
-  const auth = new google.auth.OAuth2();
-  auth.setCredentials({
-    access_token: session.accessToken,
-  });
-  const gmail = google.gmail({ version: 'v1', auth });
-
   try {
+    console.log('Checking session...');
+    const session = await getSession({ req });
+    console.log('Session result:', session);
+    
+    if (!session) {
+      console.log('No session found');
+      return res.status(401).json({ error: 'Not authenticated' });
+    }
+
+    const { bank } = req.query;
+    if (!bank) {
+      return res.status(400).json({ error: 'Bank parameter is required' });
+    }
+
+    const auth = new google.auth.OAuth2();
+    auth.setCredentials({
+      access_token: session.accessToken,
+    });
+    const gmail = google.gmail({ version: 'v1', auth });
+
     const response = await gmail.users.messages.list({
       userId: 'me',
       q: `is:unread subject:"${bank}" subject:"信用卡" subject:"帳單"`,
